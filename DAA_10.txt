@@ -1,0 +1,71 @@
+# Desain Analisis Algoritma Pertemuan 10
+
+- Aplikasi Linear Programing
+# Instantiate Our problem class
+model = pulp.LpProblem("ProfitMaximisingProblem", pulp.Lpm=Maximize)
+
+A = pulp.LpVariable('A', lowBound=0, cat='Integer')
+B = pulp.LpVariable('B', lowBound=0, cat='Integer')
+
+# Objective function
+model += 5000 * A + 2500 * B, "Profit"
+# Constrains
+model += 3 * A + 2 * B <= 20
+model += 4 * A + 3 * B <= 30
+model += 4 * A + 3 * B <= 44
+
+# Solve our problem
+model.solve()
+pulp.LpStatus[model.status]
+
+Out : 'Optimal'
+
+
+- Latihan 1
+# Print our decision variable values
+print (A.varValue)
+print (B.VarValue)
+
+6.0
+1.0
+
+# Print our objective function value
+print (pulp.value(model.objective))
+32500.0
+
+- Latihan 2
+
+# Import required Libraries
+import numpy as np
+from scipy.optimize import linprog
+
+# Set the inequality constraints matrix
+# Note: the inequality constraints be in the from of <=
+A = np.array([[1, 0], [2, 3], [1, 1], [-1, 0], [0, -1]])
+
+# Set the coefficients of the linear objective function vector
+# Note: when maximizing, change the signs of the c vector coefficient
+c = np.array([-5, -7])
+
+# Solve Linear programming problem
+res = linprog(c, A_ub=A, B_ub=B)
+
+# Print('Optimal value:', round(res.fun*-1, ndigits=2),
+        '\nx values:', res.x,
+        '\nNumber of iterations performed:', res.nit,
+        '\nStatus:', res.message)
+
+Optimal value: 46.0
+x values: [5. 3.]
+Number of iterations performed: 5
+Status: Optimization terminated successfully.
+
+
+
+
+
+
+
+
+
+
